@@ -1,0 +1,6 @@
+site_name: pytest-ast-back-to-python
+site_description: A plugin for pytest devs to view how assertion rewriting recodes the AST
+
+theme: readthedocs
+
+repo_url: https://github.com/tomviner/pytest-ast-back-to-python
