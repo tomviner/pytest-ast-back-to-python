@@ -1,5 +1,5 @@
 pytest-ast-back-to-python
-========================================
+=========================
 
 .. image:: https://travis-ci.org/tomviner/pytest-ast-back-to-python.svg?branch=master
     :target: https://travis-ci.org/tomviner/pytest-ast-back-to-python
@@ -12,9 +12,6 @@ pytest-ast-back-to-python
 A plugin for pytest devs to view how assertion rewriting recodes the AST
 
 ----
-
-This `Pytest`_ plugin was generated with `Cookiecutter`_ along with `@hackebrot`_'s `Cookiecutter-pytest-plugin`_ template.
-
 
 Features
 --------
@@ -88,6 +85,8 @@ License
 
 Distributed under the terms of the `BSD-3`_ license, "pytest-ast-back-to-python" is free and open source software
 
+
+This `Pytest`_ plugin was generated with `Cookiecutter`_ along with `@hackebrot`_'s `Cookiecutter-pytest-plugin`_ template.
 
 Issues
 ------
