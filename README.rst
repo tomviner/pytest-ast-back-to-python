@@ -1,5 +1,5 @@
 pytest-ast-back-to-python
-===================================
+========================================
 
 .. image:: https://travis-ci.org/tomviner/pytest-ast-back-to-python.svg?branch=master
     :target: https://travis-ci.org/tomviner/pytest-ast-back-to-python
@@ -19,13 +19,7 @@ This `Pytest`_ plugin was generated with `Cookiecutter`_ along with `@hackebrot`
 Features
 --------
 
-* TODO
-
-
-Requirements
-------------
-
-* TODO
+Pytest rewrites the AST (abstract syntax tree) of your tests, for the purpose of displaying the subexpressions involved in your assert statements. This plugin converts that rewritten AST back to Python source, and displays it.
 
 
 Installation
@@ -39,7 +33,50 @@ You can install "pytest-ast-back-to-python" via `pip`_ from `PyPI`_::
 Usage
 -----
 
-* TODO
+.. code-block:: bash
+
+    py.test --show-ast-as-python
+
+Example
+-------
+
+Take a trivial test like:
+
+.. code-block:: python
+
+    def test_simple():
+        a = 1
+        b = 2
+        assert 1 + 2 == 3
+
+View the rewritten AST as Python like this:
+
+.. code-block:: bash
+
+    $ py.test --show-ast-as-python test_simple.py
+    ======================================== test session starts ========================================
+    plugins: ast-back-to-python-0.1.0, cov-2.2.1
+    collected 1 items
+
+    test_simple.py .
+    ======================================== Rewritten AST as Python ========================================
+    import builtins as @py_builtins
+    import _pytest.assertion.rewrite as @pytest_ar
+
+    def test_simple():
+        a = 1
+        b = 2
+        @py_assert0 = 1
+        @py_assert2 = 2
+        @py_assert4 = @py_assert0 + @py_assert2
+        @py_assert6 = 3
+        @py_assert5 = @py_assert4 == @py_assert6
+        if not @py_assert5:
+            @py_format8 = @pytest_ar._call_reprcompare(('==',), (@py_assert5,), ('(%(py1)s + %(py3)s) == %(py7)s',), (@py_assert4, @py_assert6)) % {'py3': @pytest_ar._saferepr(@py_assert2), 'py1': @pytest_ar._saferepr(@py_assert0), 'py7': @pytest_ar._saferepr(@py_assert6)}
+            @py_format10 = ('' + 'assert %(py9)s') % {'py9': @py_format8}
+            raise AssertionError(@pytest_ar._format_explanation(@py_format10))
+        @py_assert0 = @py_assert2 = @py_assert4 = @py_assert5 = @py_assert6 = None
+
 
 Contributing
 ------------
