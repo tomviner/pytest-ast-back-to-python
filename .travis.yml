@@ -10,7 +10,7 @@ python:
   - "pypy"
 
 install:
-  - pip install tox
+  - pip install tox coveralls pytest-travis-fold
   - "TOX_ENV=${TRAVIS_PYTHON_VERSION/[0-9].[0-9]/py${TRAVIS_PYTHON_VERSION/.}}"
 script: tox -e $TOX_ENV
 
@@ -19,3 +19,5 @@ before_cache:
 cache:
   directories:
     - $HOME/.cache/pip
+after_success:
+  - coveralls
