@@ -52,5 +52,5 @@ class AstAsPython(object):
             return
 
         for source in self.store:
-            terminalreporter._tw.sep("=", "Ast as Python")
+            terminalreporter._tw.sep("=", "Rewritten AST as Python")
             terminalreporter.write(source)

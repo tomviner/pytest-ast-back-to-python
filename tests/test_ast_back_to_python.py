@@ -1,25 +1,56 @@
 # -*- coding: utf-8 -*-
 
 
-def test_bar_fixture(testdir):
-    """Make sure that pytest accepts our fixture."""
+def test_ast_as_python_on(testdir):
+    """Given I use the cmd line option, I should see rewritten AST as Python."""
 
     # create a temporary pytest test module
     testdir.makepyfile("""
-        def test_sth(bar):
-            assert bar == "europython2015"
+        def test_ast_as_python_on(request):
+            assert request.config.getoption('ast_as_python')
     """)
 
     # run pytest with the following cmd args
     result = testdir.runpytest(
-        '--foo=europython2015',
+        '--show-ast-as-python',
         '-v'
     )
 
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines([
-        '*::test_sth PASSED',
+        '*::test_ast_as_python_on PASSED',
     ])
+    # The expression within the assert statement should be broken down to
+    # constituent parts like this:
+    result.stdout.fnmatch_lines([
+        '*@py_assert1 = request.config',
+        "*@py_assert3 = @py_assert1.getoption",
+        "*@py_assert5 = 'ast_as_python'",
+        '*@py_assert7 = @py_assert3(@py_assert5)',
+    ])
+
+    # make sure that that we get a '0' exit code for the testsuite
+    assert result.ret == 0
+
+def test_ast_as_python_off(testdir):
+    """Given no cmd line option, I should see no rewritten AST as Python."""
+
+    # create a temporary pytest test module
+    testdir.makepyfile("""
+        def test_ast_as_python_off(request):
+            assert not request.config.getoption('ast_as_python')
+    """)
+
+    # run pytest with the following cmd args
+    result = testdir.runpytest(
+        '-v'
+    )
+
+    # fnmatch_lines does an assertion internally
+    result.stdout.fnmatch_lines([
+        '*::test_ast_as_python_off PASSED',
+    ])
+    assert '@py_assert' not in result.stdout.str()
 
     # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
@@ -32,33 +63,5 @@ def test_help_message(testdir):
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines([
         'ast-back-to-python:',
-        '*--foo=DEST_FOO*Set the value for the fixture "bar".',
+        '*--show-ast-as-python*Show how assertion rewriting recoded the AST.',
     ])
-
-
-def test_hello_ini_setting(testdir):
-    testdir.makeini("""
-        [pytest]
-        HELLO = world
-    """)
-
-    testdir.makepyfile("""
-        import pytest
-
-        @pytest.fixture
-        def hello(request):
-            return request.config.getini('HELLO')
-
-        def test_hello_world(hello):
-            assert hello == 'world'
-    """)
-
-    result = testdir.runpytest('-v')
-
-    # fnmatch_lines does an assertion internally
-    result.stdout.fnmatch_lines([
-        '*::test_hello_world PASSED',
-    ])
-
-    # make sure that that we get a '0' exit code for the testsuite
-    assert result.ret == 0
