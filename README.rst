@@ -44,7 +44,7 @@ Take a trivial test like:
     def test_simple():
         a = 1
         b = 2
-        assert 1 + 2 == 3
+        assert a + b == 3
 
 View the rewritten AST as Python like this:
 
