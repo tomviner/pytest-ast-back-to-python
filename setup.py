@@ -23,7 +23,7 @@ setup(
     description='A plugin for pytest devs to view how assertion rewriting recodes the AST',
     long_description=read('README.rst'),
     py_modules=['pytest_ast_back_to_python', 'codegen'],
-    install_requires=['pytest>=2.8.1'],
+    install_requires=['pytest>=3.0.0'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

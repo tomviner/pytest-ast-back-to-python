@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 from _pytest.assertion.rewrite import rewrite_asserts
-from _pytest.monkeypatch import monkeypatch
+from _pytest.monkeypatch import MonkeyPatch
 
 import codegen
 
@@ -22,9 +22,9 @@ def pytest_configure(config):
     config.pluginmanager.register(config._ast_as_python)
 
 def make_replacement_rewrite_asserts(store):
-    def replacement_rewrite_asserts(tree):
-        rewrite_asserts(tree)
-        store.append(codegen.to_source(tree))
+    def replacement_rewrite_asserts(mod, module_path=None, config=None):
+        rewrite_asserts(mod, module_path, config)
+        store.append(codegen.to_source(mod))
     return replacement_rewrite_asserts
 
 class AstAsPython(object):
@@ -35,7 +35,7 @@ class AstAsPython(object):
         if not config.getoption('ast_as_python'):
             return
 
-        mp = monkeypatch()
+        mp = MonkeyPatch()
         mp.setattr(
             '_pytest.assertion.rewrite.rewrite_asserts',
             make_replacement_rewrite_asserts(self.store))
