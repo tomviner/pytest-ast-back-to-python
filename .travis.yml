@@ -7,11 +7,14 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
+  - "3.6"
+  - "3.7-dev"
+  - "nightly"
   - "pypy"
 
 install:
   - pip install tox coveralls pytest-travis-fold
-  - "TOX_ENV=${TRAVIS_PYTHON_VERSION/[0-9].[0-9]/py${TRAVIS_PYTHON_VERSION/.}}"
+  - TOX_ENV=$(python -c "import sys;print('py{}{}'.format(*sys.version_info[:2]))")
 script: tox -e $TOX_ENV
 
 before_cache:
