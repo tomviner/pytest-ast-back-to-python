@@ -22,8 +22,9 @@ def pytest_configure(config):
     config.pluginmanager.register(config._ast_as_python)
 
 def make_replacement_rewrite_asserts(store):
-    def replacement_rewrite_asserts(mod, module_path=None, config=None):
-        rewrite_asserts(mod, module_path, config)
+    def replacement_rewrite_asserts(mod, source, module_path=None, config=None):
+        rewrite_asserts(mod, source, module_path, config)
+
         store.append(codegen.to_source(mod))
     return replacement_rewrite_asserts
 

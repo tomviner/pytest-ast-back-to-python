@@ -18,7 +18,7 @@ def test_ast_as_python_on(testdir):
 
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines([
-        '*::test_ast_as_python_on PASSED',
+        '*::test_ast_as_python_on PASSED*',
     ])
     # The expression within the assert statement should be broken down to
     # constituent parts like this:
@@ -48,7 +48,7 @@ def test_ast_as_python_off(testdir):
 
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines([
-        '*::test_ast_as_python_off PASSED',
+        '*::test_ast_as_python_off PASSED*',
     ])
     assert '@py_assert' not in result.stdout.str()
 
