@@ -17,16 +17,20 @@ def pytest_addoption(parser):
         help='Show how assertion rewriting recoded the AST.'
     )
 
+
 def pytest_configure(config):
     config._ast_as_python = AstAsPython()
     config.pluginmanager.register(config._ast_as_python)
 
-def make_replacement_rewrite_asserts(store):
-    def replacement_rewrite_asserts(mod, source, module_path=None, config=None):
-        rewrite_asserts(mod, source, module_path, config)
 
+def make_replacement_rewrite_asserts(store):
+
+    def replacement_rewrite_asserts(mod, *args, **kwargs):
+        rewrite_asserts(mod, *args, **kwargs)
         store.append(codegen.to_source(mod))
+
     return replacement_rewrite_asserts
+
 
 class AstAsPython(object):
     def __init__(self):
