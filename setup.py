@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-ast-back-to-python',
-    version='1.0.1',
+    version='1.2.0',
     author='Tom Viner',
     author_email='code@viner.tv',
     maintainer='Tom Viner',
@@ -23,7 +23,7 @@ setup(
     description='A plugin for pytest devs to view how assertion rewriting recodes the AST',
     long_description=read('README.rst'),
     py_modules=['pytest_ast_back_to_python', 'codegen'],
-    install_requires=['pytest>=3.0.0'],
+    install_requires=['pytest'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

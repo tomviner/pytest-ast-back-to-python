@@ -4,18 +4,16 @@ sudo: false
 language: python
 python:
   - "2.7"
-  - "3.3"
   - "3.4"
   - "3.5"
   - "3.6"
-  - "3.7-dev"
+  - "3.7"
+  - "3.8-dev"
   - "nightly"
-  - "pypy"
 
 install:
-  - pip install tox coveralls pytest-travis-fold
-  - TOX_ENV=$(python -c "import sys;print('py{}{}'.format(*sys.version_info[:2]))")
-script: tox -e $TOX_ENV
+  - pip install tox-travis coveralls pytest-travis-fold
+script: tox
 
 before_cache:
   - rm -rf $HOME/.cache/pip/log
