@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-ast-back-to-python',
-    version='1.1.0',
+    version='1.2.0',
     author='Tom Viner',
     author_email='code@viner.tv',
     maintainer='Tom Viner',
