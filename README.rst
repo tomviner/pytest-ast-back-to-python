@@ -63,16 +63,18 @@ View the rewritten AST as Python like this:
     def test_simple():
         a = 1
         b = 2
-        @py_assert0 = 1
-        @py_assert2 = 2
-        @py_assert4 = @py_assert0 + @py_assert2
-        @py_assert6 = 3
-        @py_assert5 = @py_assert4 == @py_assert6
-        if not @py_assert5:
-            @py_format8 = @pytest_ar._call_reprcompare(('==',), (@py_assert5,), ('(%(py1)s + %(py3)s) == %(py7)s',), (@py_assert4, @py_assert6)) % {'py3': @pytest_ar._saferepr(@py_assert2), 'py1': @pytest_ar._saferepr(@py_assert0), 'py7': @pytest_ar._saferepr(@py_assert6)}
-            @py_format10 = ('' + 'assert %(py9)s') % {'py9': @py_format8}
-            raise AssertionError(@pytest_ar._format_explanation(@py_format10))
-        @py_assert0 = @py_assert2 = @py_assert4 = @py_assert5 = @py_assert6 = None
+        @py_assert2 = a + b
+        @py_assert4 = 3
+        @py_assert3 = @py_assert2 == @py_assert4
+        if @py_assert3 is None:
+            from _pytest.warning_types import PytestAssertRewriteWarning
+            from warnings import warn_explicit
+            warn_explicit(PytestAssertRewriteWarning('asserting the value None, please use "assert is None"'), category=None, filename='/home/tom/.virtualenvs/tmp-483cf04ecc31dda8/test_thing.py', lineno=4)
+        if not @py_assert3:
+            @py_format6 = @pytest_ar._call_reprcompare(('==',), (@py_assert3,), ('(%(py0)s + %(py1)s) == %(py5)s',), (@py_assert2, @py_assert4)) % {'py0': @pytest_ar._saferepr(a) if 'a' in @py_builtins.locals() or @pytest_ar._should_repr_global_name(a) else 'a', 'py1': @pytest_ar._saferepr(b) if 'b' in @py_builtins.locals() or @pytest_ar._should_repr_global_name(b) else 'b', 'py5': @pytest_ar._saferepr(@py_assert4)}
+            @py_format8 = ('' + 'assert %(py7)s') % {'py7': @py_format6}
+            raise AssertionError(@pytest_ar._format_explanation(@py_format8))
+        @py_assert2 = @py_assert3 = @py_assert4 = None
 
 
 Contributing
